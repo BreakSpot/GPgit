@@ -6,13 +6,13 @@
 
 随机散列与预分区。二者结合起来，是比较完美的，预分区一开始就预建好了一部分region,这些region都维护着自已的start-end keys，再配合上随机散列，写数据能均等地命中这些预建的region，就能解决上面的那些缺点，大大地提高了性能。
 
-随机散列：1、时间戳高位散列占位；
+- 随机散列：1、时间戳高位散列占位；
 
 ​	2、hash：rowkey转为hash再转为bytes，加上本身id 转为bytes,组成rowkey；
 
 ​	3、partition：rowkey=id取模+rowkey。
 
-预分区：
+- 预分区：
 
 ```shell
 create 'testtable', 'common', 'data', {SPLITS => ['1','2','3']}
@@ -22,3 +22,14 @@ create 'testtable', 'common', 'data', {SPLITS => ['1','2','3']}
 
 startrowkey和endrowkey为 **(-∞, 1),  [1, 2),  [2,3),  [3,+∞)**
 
+- 设置监控，分散集中，手动分裂
+
+  监控每个region的大小
+
+  在预分区的多个region中，分散储存，不要太均匀，几个处于快满的状态，准备分裂，其他处于半满状态，不会太影响整体性能
+
+  ```
+  split 'forced_table', 'b' //其中forced_table 为要split的table , ‘b’ 为split 点
+  ```
+
+  ​	
