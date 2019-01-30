@@ -1,0 +1,68 @@
+Hbase
+0.98.6 版本
+应用场景：
+    海量数据存储
+        亿级
+    海量数据即时查询
+        秒级（1秒左右）
+    数据安全
+
+table
+    columnfamily
+        column01, column02,....
+每条数据有唯一的标识符
+    rowkey  主键
+面向列的数据库
+
+rowkey + columnfamily + name + timestamp: value = cell (单元)
+
+
+person
+    baseic
+        name,age,birthday,sex,tel
+    job
+        job1s
+        job2
+    edu
+        xxx
+        yyy
+        
+思考：
+    Hbase表的数据，可以快速查询，关键在于表中rowkey
+
+字节数组进行存储
+工具类
+Bytes
+
+    hdfs目录下/Hbase中各个目录存储的含义：WAL
+        
+在Hbase的数据查询有三种方式
+    * 依据rowkey查询，最快的
+        get
+    * 范围查询
+        scan range
+        scan tablename, {startrow => '10000'}
+    * 全表扫描
+        scan
+
+物理模型：
+    1、table中所有的行都按rowkey的字典序排序
+    2、table在行的方向上分割为多个region，[startrowkey, stoprowkey)
+    3、region按大小分割，每个表开始都有一个region，随着数据的增多，region会不断的增大，当增大到一个阈值时，region就会等分会两个新的region，之后会有越来越多的region
+    4、region是Hbase中分布式存储和负载均衡中最小单元。不同的region分布的不同的regionServer中
+    5、Region虽然是分布式存储的最小单元，但不是存储的最小单元；Region由一个或多个store组成，每一个store保存了一个columnsfamily；每个store由于一个memstore和0个或多个storeFile组成；memstore存储在内存中，storeFile存储在hdfs上 
+
+
+Hbase数据写入流程：
+    put->cell
+        0) wal预写日志
+        1) memstore 
+        2) storeFile -> hdfs
+    防止数据丢失
+
+默认的情况下，创建一个表时，会给表创建一个Region
+startrow为null，endrowkey也为null
+
+
+问题：1、Hbase为什么会这么快？查询和写入
+2、hdfs目录下/Hbase中各个目录存储的含义：WAL
