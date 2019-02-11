@@ -64,3 +64,24 @@ hashTable：线程安全，每个方法上都加上synchronized（同步锁）
 
 
 
+8、HashMap 和 Hashtable 的区别? 
+
+二者都实现了 Map 接口，是将惟一键映射到特定的值上；
+
+主要区别 在于：  
+
+1)HashMap 没有排序，允许一个 null 键和多个 null 值,而 Hashtable 不允许；  
+
+2)HashMap 把Hashtable 的contains 方法去掉了，改成containsvalue 和 containsKey,因为 contains 方法容易让人引起误解； 
+
+3)Hashtable 继承自 Dictionary 类，HashMap 是 Java1.2 引进的 Map 接口的实现；  
+
+4)Hashtable 的方法是 Synchronize 的，而 HashMap 不是，在多个线程 访问 Hashtable 时，不需要自己为它的方法实现同步，而 HashMap 就必 须为之提供外同步。Hashtable 和 HashMap 采用的 hash/rehash 算法大 致一样，所以性能不会有很大的差异。   
+
+9、 Arraylist 与 Vector 区别？
+
+就 ArrayList 与 Vector 主要从二方面来说：  
+
+1）同步性：Vector 是线程安全的（同步），而 ArrayList 是线程序不 安全的；  
+
+2）数据增长：当需要增长时,Vector 默认增长一倍，而 ArrayList 却 是一半。
