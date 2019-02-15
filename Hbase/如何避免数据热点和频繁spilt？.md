@@ -29,7 +29,7 @@ startrowkey和endrowkey为 **(-∞, 1),  [1, 2),  [2,3),  [3,+∞)**
   在预分区的多个region中，分散储存，不要太均匀，几个处于快满的状态，准备分裂，其他处于半满状态，不会太影响整体性能
 
   ```
-  split 'forced_table', 'b' //其中forced_table 为要split的table , ‘b’ 为split 点
+  split 'forced_table', 'b' //其中forced_table 为要split的table , ‘b’ 为split点
   ```
 
   ​	

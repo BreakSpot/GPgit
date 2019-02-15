@@ -18,7 +18,7 @@ Zookeeper：
     2).存储所有HRegion的寻址入口
     3).监控上下线，并通知Master
     4).存储HBase的schema和table的数据
-    5). 存储meta表的位置
+    5).存储meta表的位置
 HMaster:
     1).HMaster没有单点问题，HBase中可以启动多个HMaster，通过Zookeeper的Master Election机制保证总有一个Master在运行主要负责Table和Region的管理工作
     2).管理用户对table的增删改查操作
